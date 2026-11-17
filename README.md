@@ -16,7 +16,7 @@ Render PaaS Web Service (app.py + cv_domain.py + llm_client.py)
    │  • Enforces input bounds (<=500 chars, <=6 turns) & sliding-window IP rate limit (15/min, LRU <=1000 IPs)
    │  • Calls Google AI Studio via official google-genai SDK (15s timeout, bounded thinking)
    ▼
-Google AI Studio (Gemini API: gemini-3.8-flash)
+Google AI Studio (Gemini API: gemini-3.5-flash-lite)
 ```
 
 ## Files

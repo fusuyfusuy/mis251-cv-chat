@@ -9,7 +9,7 @@ from google import genai
 from google.genai import errors, types
 import httpx
 
-DEFAULT_MODEL = "gemini-3.8-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 MAX_OUTPUT_TOKENS = 1024
 REQUEST_TIMEOUT_MS = 15_000
 
