@@ -1,0 +1,269 @@
+{
+  "identity": {
+    "name": "M. Yusuf Akçakaya",
+    "handle": "@fusuyfusuy",
+    "role": "Research Assistant & PhD Candidate",
+    "institution": "Boğaziçi University",
+    "department": "Department of Management Information Systems",
+    "location": "Istanbul, Turkey",
+    "summary": "Experience in cyber security red/blue practice, network infrastructure, regulations, risk management, and AI orchestration. Gave trainings and wrote blog posts about cyber security, developed web pages, and managed e-mail, web, and VPN servers. Codes mostly with Python and TypeScript/JavaScript, and also has experience with C, Java, PHP, SQL, Rust, and shell scripting.",
+    "contacts": [
+      {
+        "label": "yusufakcakaya@gmail.com",
+        "href": "mailto:yusufakcakaya@gmail.com",
+        "external": false
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/fusuyfusuy/",
+        "external": true
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/in/yusufakcakaya/",
+        "external": true
+      },
+      {
+        "label": "Blog",
+        "href": "https://daginikmasa.com/",
+        "external": true
+      }
+    ]
+  },
+  "appointment": {
+    "role": "Research Assistant",
+    "institution": "Boğaziçi University",
+    "department": "MIS Department",
+    "period": "May 2023 – Present",
+    "summary": "Research focus on cybersecurity and AI, risk management, governance, and information architecture.",
+    "research_streams": [
+      "Cybersecurity & AI",
+      "Risk Management & Governance",
+      "Information Architecture",
+      "Agent-Based Modeling (NetLogo)"
+    ],
+    "courses_assisted": [
+      {
+        "code": "MIS 131",
+        "title": "Introduction to Programming",
+        "role": "Lab & Problem Sessions"
+      },
+      {
+        "code": "MIS 132",
+        "title": "Object-Oriented Programming",
+        "role": "Lab & Grading"
+      },
+      {
+        "code": "MIS 233",
+        "title": "Web Based System Development",
+        "role": "Web Systems & Lab"
+      },
+      {
+        "code": "MIS 251",
+        "title": "IT Infrastructures & Operations",
+        "role": "Course & Exam Operations"
+      }
+    ]
+  },
+  "education": [
+    {
+      "degree": "Management Information Systems, PhD",
+      "institution": "Boğaziçi University",
+      "period": "Feb 2025 – Present",
+      "summary": "Doctoral study and research in Management Information Systems.",
+      "highlights": []
+    },
+    {
+      "degree": "Management Information Systems, MA",
+      "institution": "Boğaziçi University",
+      "period": "Sep 2021 – Sep 2024",
+      "summary": "Graduate degree and thesis research on agent-based modeling of enterprise cybersecurity.",
+      "highlights": [
+        "GPA: 3.44 / 4.00",
+        "Master's Thesis: AGENT BASED MODELING OF THIRD-PARTY ENTERPRISE CYBERSECURITY"
+      ]
+    },
+    {
+      "degree": "Management Information Systems, BSc",
+      "institution": "Boğaziçi University",
+      "period": "Sep 2015 – Aug 2021",
+      "summary": "Coursework spanning management, finance, economics, programming, networking, governance, ERP, supply chains, project management, and system design.",
+      "highlights": [
+        "Graduation Project: MITRE ATT&CK mapped HIDS using Sysmon and Wazuh"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Aposto",
+      "role": "Back End Engineer",
+      "period": "Apr 2022 – May 2023",
+      "mode": "",
+      "summary": "Developed payment and subscription APIs using TypeScript, Node.js, NestJS, and MongoDB.",
+      "tags": ["TypeScript", "Node.js", "NestJS", "MongoDB"]
+    },
+    {
+      "company": "Bitexen",
+      "role": "Cloud Security Engineer",
+      "period": "Feb 2022 – Apr 2022",
+      "mode": "",
+      "summary": "Managed MDM, EDR, and security tooling; designed bug bounty and vulnerability disclosure programs; evaluated cloud, application, and DevOps security.",
+      "tags": ["MDM", "EDR", "Bug Bounty", "Cloud Security", "DevOps Security"]
+    },
+    {
+      "company": "Turkcell",
+      "role": "Offensive Security Associate",
+      "period": "Sep 2021 – Dec 2021",
+      "mode": "",
+      "summary": "Managed end-to-end internet and intranet penetration tests (scoping, enumeration, exploitation, privilege escalation, post-exploitation, reporting).",
+      "tags": ["Penetration Testing", "Exploitation", "Privilege Escalation", "Reporting"]
+    },
+    {
+      "company": "PwC Turkey",
+      "role": "Cyber Security Consultant",
+      "period": "Feb 2021 – Aug 2021",
+      "mode": "Internship",
+      "summary": "Executed penetration tests, red team activities, network infrastructure assessments, and internal application / DDoS tooling development.",
+      "tags": ["Python", "SQL", "HTML/CSS/JS", "Bash", "Red Team"]
+    },
+    {
+      "company": "Boğaziçi University Cyber Security Center",
+      "role": "Penetration Tester",
+      "period": "Sep 2018 – Aug 2021",
+      "mode": "Part-time",
+      "summary": "Conducted 20+ penetration tests, firewall configurations, phishing simulations, security trainings, and consultancies.",
+      "tags": ["20+ Pentests", "Firewall", "Phishing", "Training"]
+    },
+    {
+      "company": "Boğaziçi University Computer Center",
+      "role": "Assistant Web Developer",
+      "period": "Jul 2019 – Feb 2020",
+      "mode": "Part-time",
+      "summary": "Built the university's official campus map page (map.boun.edu.tr) and Drupal websites for university units.",
+      "tags": ["PHP", "Drupal", "HTML/CSS/JS", "SQL"]
+    }
+  ],
+  "camps": [
+    {
+      "title": "Turkcell / CyberCamp 2021",
+      "period": "2021",
+      "distinction": "CTF 2nd Place"
+    },
+    {
+      "title": "Boğaziçi University Cybersecurity Center / CyberCamp",
+      "period": "2017 – 2021",
+      "distinction": "Participant (2017–2018) · Trainer (2019–2021)"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Mimori",
+      "category": "Agent Memory Tool",
+      "period": "Open Source",
+      "href": "https://github.com/fusuyfusuy/mimori",
+      "summary": "AI agent repository memory tool using AST mapping, PageRank, and decision logging.",
+      "stack": ["Rust", "AST", "PageRank", "MCP"]
+    },
+    {
+      "name": "Akatsuki",
+      "category": "Agent Knowledge Base",
+      "period": "Open Source",
+      "href": "https://github.com/fusuyfusuy/akatsuki",
+      "summary": "AI agent knowledge base with custom MCP server, BM25 search, and word embeddings.",
+      "stack": ["Rust", "MCP", "BM25", "Embeddings"]
+    },
+    {
+      "name": "bountools.com",
+      "category": "Web Platform",
+      "period": "Live",
+      "href": "https://bountools.com/",
+      "summary": "Boğaziçi University course scheduling, archive, and search platform.",
+      "stack": ["Python", "FastAPI", "Meilisearch", "PostgreSQL"]
+    },
+    {
+      "name": "Boğaziçi University Map App",
+      "category": "Web Application",
+      "period": "map.boun.edu.tr",
+      "href": "https://map.boun.edu.tr/",
+      "summary": "Official interactive campus map for Boğaziçi University.",
+      "stack": ["PHP", "JavaScript", "HTML/CSS", "SQL"]
+    },
+    {
+      "name": "MITRE ATT&CK Mapped Open-Source HIDS",
+      "category": "Graduation Project",
+      "period": "2021",
+      "href": "",
+      "summary": "Sysmon and Wazuh based open-source host intrusion detection and alerting pipeline.",
+      "stack": ["Sysmon", "Wazuh", "MITRE ATT&CK"]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Coding & Scripting",
+      "items": ["Python", "TypeScript", "JavaScript", "SQL", "Bash"]
+    },
+    {
+      "category": "AI & Simulation",
+      "items": ["LLM Agent Orchestration", "Harness Management", "NetLogo"]
+    },
+    {
+      "category": "Additional Languages & Modeling",
+      "items": ["Rust", "Java", "C", "PHP", "UML"]
+    }
+  ],
+  "interests": [
+    "Cybersecurity",
+    "Artificial Intelligence",
+    "Risk Management",
+    "Governance",
+    "Information Architecture"
+  ],
+  "venues": [
+    {
+      "name": "daginikmasa.com",
+      "badge": "Blog",
+      "href": "https://daginikmasa.com/",
+      "description": "Longform essays and posts on cybersecurity, software, and personal notes."
+    },
+    {
+      "name": "fusuycorp.com",
+      "badge": "Workshop",
+      "href": "https://fusuycorp.com/",
+      "description": "Computational sandbox, browser physics simulations, and AI agent essays."
+    },
+    {
+      "name": "hepyeni.net",
+      "badge": "Platform",
+      "href": "https://hepyeni.net/",
+      "description": "Collaborative book, film, and music recommendation and voting app for clubs."
+    }
+  ],
+  "languages": [
+    {
+      "language": "Turkish",
+      "proficiency": "Native"
+    },
+    {
+      "language": "English",
+      "proficiency": "Advanced (TOEFL iBT: 106)"
+    }
+  ],
+  "chat_prompts": [
+    {
+      "label": "Summary",
+      "question": "Summarize Yusuf's background in 3 concise sentences."
+    },
+    {
+      "label": "Security Experience",
+      "question": "What cybersecurity and penetration testing experience does Yusuf have?"
+    },
+    {
+      "label": "Research & Teaching",
+      "question": "What is Yusuf's academic research focus and which courses has he assisted?"
+    },
+    {
+      "label": "Projects",
+      "question": "What open-source and web projects has Yusuf built?"
+    }
+  ]
+}

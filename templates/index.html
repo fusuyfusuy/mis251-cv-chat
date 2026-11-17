@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ cv.identity.name }} — CV &amp; AI Assistant</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --border: #e2e8f0;
+      --tag-bg: #eef2ff;
+      --tag-text: #1e3a8a;
+      --bot-bg: #f1f5f9;
+      --err-bg: #fef2f2;
+      --err-text: #991b1b;
+      --err-border: #fecaca;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+    [data-theme="dark"] {
+      --bg: #0b1120;
+      --card: #111827;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-soft: #172554;
+      --border: #1e293b;
+      --tag-bg: #1e293b;
+      --tag-text: #bfdbfe;
+      --bot-bg: #1e293b;
+      --err-bg: #450a0a;
+      --err-text: #fecaca;
+      --err-border: #7f1d1d;
+      --shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 0.25rem; font-size: 2rem; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); margin: 0 0 0.65rem; font-size: 1rem; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .links { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+    .links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.94rem;
+    }
+    .links a:hover { text-decoration: underline; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tool-btn {
+      padding: 0.42rem 0.78rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .tool-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.45fr 1fr; align-items: start; }
+      .chat-card { position: sticky; top: 1.25rem; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      margin: 1.4rem 0 0.7rem;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.35rem;
+    }
+    h2:first-child { margin-top: 0; }
+    .entry { margin-bottom: 1.05rem; }
+    .entry:last-child { margin-bottom: 0; }
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      font-weight: 600;
+    }
+    .entry-title-link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .entry-title-link:hover { text-decoration: underline; }
+    .entry-meta { color: var(--muted); font-size: 0.85rem; font-weight: 500; }
+    .entry p { margin: 0.35rem 0 0.45rem; font-size: 0.94rem; }
+    ul { margin: 0.35rem 0 0.45rem; padding-left: 1.15rem; }
+    li { margin-bottom: 0.25rem; font-size: 0.93rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.14rem 0.58rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .skill-row { margin-bottom: 0.65rem; }
+    .skill-row strong { font-size: 0.88rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .course-pill {
+      padding: 0.45rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.84rem;
+      background: var(--bg);
+    }
+    .course-pill strong { display: block; font-size: 0.85rem; }
+    .course-pill span { color: var(--muted); font-size: 0.8rem; }
+
+    /* Chat widget */
+    .chat-box { display: flex; flex-direction: column; gap: 0.75rem; }
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.45rem;
+    }
+    .chat-header h2 { margin: 0; border: none; padding: 0; }
+    .clear-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .clear-btn:hover { color: var(--text); border-color: var(--muted); }
+    .suggestions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .suggestions button {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.79rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .suggestions button:hover { filter: brightness(0.95); }
+    .chat-log {
+      height: 360px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .msg {
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      max-width: 92%;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg.user { align-self: flex-end; background: var(--accent); color: #ffffff; }
+    .msg.bot { align-self: flex-start; background: var(--bot-bg); color: var(--text); }
+    .msg.err {
+      align-self: flex-start;
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1px solid var(--err-border);
+    }
+    .chat-form { display: flex; gap: 0.5rem; }
+    .chat-form input {
+      flex: 1;
+      padding: 0.58rem 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.94rem;
+    }
+    .chat-form button {
+      padding: 0.58rem 0.95rem;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .chat-form button:disabled { opacity: 0.55; cursor: not-allowed; }
+    .chat-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    @media print {
+      body { background: #ffffff; color: #000000; font-size: 11pt; }
+      .container { max-width: none; padding: 0; }
+      .toolbar, .chat-card { display: none !important; }
+      .grid { grid-template-columns: 1fr; }
+      .card { border: none; box-shadow: none; padding: 0; }
+      a { color: #000000; text-decoration: none; }
+      .entry, .skill-row { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>{{ cv.identity.name }}</h1>
+        <p class="subtitle">
+          {{ cv.identity.role }} · {{ cv.identity.institution }} · {{ cv.identity.location }}
+          <span class="mono">({{ cv.identity.handle }})</span>
+        </p>
+        <div class="links">
+          {% for contact in cv.identity.contacts %}
+            <a href="{{ contact.href }}"{% if contact.external %} target="_blank" rel="noopener"{% endif %}>{{ contact.label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="toolbar">
+        <button id="theme-btn" class="tool-btn" type="button">Theme</button>
+        <a class="tool-btn" href="/cv.md">Markdown</a>
+        <button id="print-btn" class="tool-btn" type="button">Print / PDF</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <h2>Summary</h2>
+        <p style="margin-top: 0;">{{ cv.identity.summary }}</p>
+        <div class="tags">
+          {% for interest in cv.interests %}
+            <span class="tag">{{ interest }}</span>
+          {% endfor %}
+        </div>
+
+        <h2>Academic Appointment &amp; Teaching</h2>
+        <div class="entry">
+          <div class="entry-head">
+            <span>{{ cv.appointment.role }} — {{ cv.appointment.institution }} ({{ cv.appointment.department }})</span>
+            <span class="entry-meta">{{ cv.appointment.period }}</span>
+          </div>
+          <p>{{ cv.appointment.summary }}</p>
+          <div class="tags">
+            {% for stream in cv.appointment.research_streams %}
+              <span class="tag">{{ stream }}</span>
+            {% endfor %}
+          </div>
+          <div class="course-grid">
+            {% for c in cv.appointment.courses_assisted %}
+              <div class="course-pill">
+                <strong>{{ c.code }} · {{ c.title }}</strong>
+                <span>{{ c.role }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <h2>Education</h2>
+        {% for edu in cv.education %}
+          <div class="entry">
+            <div class="entry-head">
+              <span>{{ edu.degree }} — {{ edu.institution }}</span>
+              <span class="entry-meta">{{ edu.period }}</span>
+            </div>
+            {% if edu.summary %}<p>{{ edu.summary }}</p>{% endif %}
+            {% if edu.highlights %}
+              <ul>
+                {% for hl in edu.highlights %}
+                  <li>{{ hl }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <h2>Experience</h2>
+        {% for exp in cv.experience %}
+          <div class="entry">
+            <div class="entry-head">
+              <span>{{ exp.role }} — {{ exp.company }}{% if exp.mode %} ({{ exp.mode }}){% endif %}</span>
+              <span class="entry-meta">{{ exp.period }}</span>
+            </div>
+            <p>{{ exp.summary }}</p>
+            {% if exp.tags %}
+              <div class="tags">
+                {% for tag in exp.tags %}
+                  <span class="tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <h2>Courses &amp; CyberCamps</h2>
+        {% for camp in cv.camps %}
+          <div class="entry">
+            <div class="entry-head">
+              <span>{{ camp.title }}</span>
+              <span class="entry-meta">{{ camp.period }}</span>
+            </div>
+            <p>{{ camp.distinction }}</p>
+          </div>
+        {% endfor %}
+
+        <h2>Projects</h2>
+        {% for proj in cv.projects %}
+          <div class="entry">
+            <div class="entry-head">
+              {% if proj.href %}
+                <a class="entry-title-link" href="{{ proj.href }}" target="_blank" rel="noopener">{{ proj.name }}</a>
+              {% else %}
+                <span>{{ proj.name }}</span>
+              {% endif %}
+              <span class="entry-meta">{{ proj.category }} · {{ proj.period }}</span>
+            </div>
+            <p>{{ proj.summary }}</p>
+            {% if proj.stack %}
+              <div class="tags">
+                {% for item in proj.stack %}
+                  <span class="tag">{{ item }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <h2>Skills &amp; Languages</h2>
+        {% for grp in cv.skills %}
+          <div class="skill-row">
+            <strong>{{ grp.category }}</strong>
+            <div class="tags">
+              {% for item in grp["items"] %}
+                <span class="tag">{{ item }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+        <div class="skill-row">
+          <strong>Languages</strong>
+          <div class="tags">
+            {% for lang in cv.languages %}
+              <span class="tag">{{ lang.language }} · {{ lang.proficiency }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <h2>Independent Platforms &amp; Writing</h2>
+        {% for venue in cv.venues %}
+          <div class="entry">
+            <div class="entry-head">
+              <a class="entry-title-link" href="{{ venue.href }}" target="_blank" rel="noopener">{{ venue.name }}</a>
+              <span class="entry-meta">{{ venue.badge }}</span>
+            </div>
+            <p>{{ venue.description }}</p>
+          </div>
+        {% endfor %}
+      </section>
+
+      <aside class="card chat-card chat-box">
+        <div class="chat-header">
+          <h2>Chat with My CV</h2>
+          <button id="clear-btn" class="clear-btn" type="button">Reset</button>
+        </div>
+
+        <div class="suggestions">
+          {% for prompt in cv.chat_prompts %}
+            <button type="button" data-q="{{ prompt.question }}">{{ prompt.label }}</button>
+          {% endfor %}
+        </div>
+
+        <div id="chat-log" class="chat-log" aria-live="polite"></div>
+
+        <form id="chat-form" class="chat-form">
+          <input
+            id="chat-input"
+            type="text"
+            maxlength="{{ max_message_chars }}"
+            placeholder="Ask about research, security exp, or projects..."
+            required
+            autocomplete="off"
+          />
+          <button id="send-btn" type="submit">Ask</button>
+        </form>
+        <div class="chat-meta-row">
+          <span>Grounded in <code>cv.json</code> · Gemini API proxy</span>
+          <span id="char-count" class="mono">0/{{ max_message_chars }}</span>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const MAX_HISTORY_TURNS = {{ max_history_turns }};
+    const MAX_MESSAGE_CHARS = {{ max_message_chars }};
+    const STORAGE_KEY = "cv_chat_history_v1";
+    const THEME_KEY = "cv_theme_v1";
+    const GREETING = "Hi! Ask me anything about Yusuf's research, cybersecurity work, teaching, or projects.";
+
+    const chatLog = document.getElementById("chat-log");
+    const chatForm = document.getElementById("chat-form");
+    const chatInput = document.getElementById("chat-input");
+    const sendBtn = document.getElementById("send-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const charCount = document.getElementById("char-count");
+    const themeBtn = document.getElementById("theme-btn");
+    const printBtn = document.getElementById("print-btn");
+
+    let history = [];
+    let isBusy = false;
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      themeBtn.textContent = theme === "dark" ? "Light Mode" : "Dark Mode";
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(savedTheme || (preferredDark ? "dark" : "light"));
+
+    themeBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+
+    printBtn.addEventListener("click", () => window.print());
+
+    // SECURITY (OWASP LLM05): Render all model/user strings with textContent only.
+    function appendMessage(text, kind) {
+      const div = document.createElement("div");
+      div.className = "msg " + kind;
+      div.textContent = text;
+      chatLog.appendChild(div);
+      chatLog.scrollTop = chatLog.scrollHeight;
+      return div;
+    }
+
+    function saveHistory() {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      } catch (_) {}
+    }
+
+    function restoreHistory() {
+      appendMessage(GREETING, "bot");
+      try {
+        const raw = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
+        if (!Array.isArray(raw)) return;
+        const valid = raw.filter(
+          (item) =>
+            item &&
+            (item.role === "user" || item.role === "assistant") &&
+            typeof item.content === "string" &&
+            item.content.trim().length > 0
+        ).slice(-MAX_HISTORY_TURNS);
+        history = valid;
+        for (const item of valid) {
+          appendMessage(item.content, item.role === "user" ? "user" : "bot");
+        }
+      } catch (_) {
+        history = [];
+      }
+    }
+
+    function updateCharCount() {
+      charCount.textContent = chatInput.value.length + "/" + MAX_MESSAGE_CHARS;
+    }
+
+    async function readSseStream(res, pendingNode) {
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let accumulated = "";
+
+      function handleBlock(block) {
+        let evt = "message";
+        const dataLines = [];
+        for (const line of block.split(/\r?\n/)) {
+          if (line.startsWith("event:")) {
+            evt = line.slice(6).trim();
+          } else if (line.startsWith("data:")) {
+            dataLines.push(line.slice(5).trim());
+          }
+        }
+        if (dataLines.length === 0) return;
+        const payload = JSON.parse(dataLines.join("\n"));
+        if (evt === "delta" && typeof payload.text === "string") {
+          accumulated += payload.text;
+          pendingNode.textContent = accumulated;
+          chatLog.scrollTop = chatLog.scrollHeight;
+        } else if (evt === "done" && typeof payload.reply === "string") {
+          accumulated = payload.reply;
+          pendingNode.textContent = accumulated;
+        } else if (evt === "error") {
+          throw new Error(payload.error || "Streaming failed.");
+        }
+      }
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split(/\r?\n\r?\n/);
+        buffer = parts.pop() || "";
+        for (const block of parts) {
+          if (block.trim()) handleBlock(block);
+        }
+      }
+      if (buffer.trim()) handleBlock(buffer);
+      return accumulated;
+    }
+
+    async function sendQuestion(message) {
+      if (isBusy) return;
+      isBusy = true;
+      appendMessage(message, "user");
+      const pending = appendMessage("Thinking...", "bot");
+      sendBtn.disabled = true;
+
+      try {
+        const res = await fetch("/api/chat/stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message, history })
+        });
+        const contentType = res.headers.get("content-type") || "";
+        if (!res.ok) {
+          let errText = "Request failed (HTTP " + res.status + ").";
+          if (contentType.includes("application/json")) {
+            const errJson = await res.json();
+            if (errJson && errJson.error) errText = errJson.error;
+          }
+          pending.className = "msg err";
+          pending.textContent = errText;
+        } else if (contentType.includes("text/event-stream") && res.body) {
+          const reply = await readSseStream(res, pending);
+          const cleanReply = (reply || "").trim() || "Sorry, I could not generate a response.";
+          pending.textContent = cleanReply;
+          history.push({ role: "user", content: message });
+          history.push({ role: "assistant", content: cleanReply });
+          if (history.length > MAX_HISTORY_TURNS) history = history.slice(-MAX_HISTORY_TURNS);
+          saveHistory();
+        } else {
+          const data = await res.json();
+          pending.textContent = data.reply;
+          history.push({ role: "user", content: message });
+          history.push({ role: "assistant", content: data.reply });
+          if (history.length > MAX_HISTORY_TURNS) history = history.slice(-MAX_HISTORY_TURNS);
+          saveHistory();
+        }
+      } catch (err) {
+        pending.className = "msg err";
+        pending.textContent = err instanceof Error && err.message ? err.message : "Network error while contacting server.";
+      } finally {
+        isBusy = false;
+        sendBtn.disabled = false;
+        chatInput.focus();
+      }
+    }
+
+    chatInput.addEventListener("input", updateCharCount);
+
+    chatForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text || isBusy) return;
+      chatInput.value = "";
+      updateCharCount();
+      sendQuestion(text);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      history = [];
+      sessionStorage.removeItem(STORAGE_KEY);
+      chatLog.replaceChildren();
+      appendMessage(GREETING, "bot");
+    });
+
+    document.querySelectorAll(".suggestions button").forEach((btn) => {
+      btn.addEventListener("click", () => sendQuestion(btn.dataset.q));
+    });
+
+    restoreHistory();
+    updateCharCount();
+  </script>
+</body>
+</html>
